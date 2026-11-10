@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Java Practical Programs</title>
+<style>
+:root{font-family:Arial,sans-serif;color:#182235;background:#f4f6fb}*{box-sizing:border-box}body{margin:0}header{background:#193675;color:white;padding:28px max(20px,calc((100% - 1150px)/2))}header h1{margin:0 0 8px}header p{margin:0;color:#dce7ff}main{max-width:1150px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:230px 1fr;gap:18px}aside,.content{background:white;border:1px solid #e3e8f0;border-radius:12px;padding:16px}aside{height:max-content;position:sticky;top:12px}input{width:100%;padding:10px;border:1px solid #d7deea;border-radius:8px;margin-bottom:12px}nav{display:grid;gap:5px}nav button{border:0;background:white;text-align:left;padding:9px;border-radius:7px;cursor:pointer;color:#344054}nav button.active,nav button:hover{background:#edf2ff;color:#2457d6}.top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:14px}.top h2{font-size:20px;margin:0}.muted{color:#667085;font-size:12px}.program{border:1px solid #e3e8f0;border-radius:10px;overflow:hidden;margin-bottom:14px}.ph{padding:13px 14px;background:#fafbfe;display:flex;justify-content:space-between;gap:10px}.ph h3{font-size:15px;margin:0}.tag{font-size:11px;background:#edf0f5;border-radius:20px;padding:4px 8px;white-space:nowrap}p.desc{font-size:13px;color:#667085;margin:0;padding:0 14px 12px}pre{margin:0;background:#111827;color:#e5edf9;padding:15px;overflow:auto;font-size:12px;line-height:1.5}.actions{padding:9px;background:#fafbfe;text-align:right;border-top:1px solid #e3e8f0}.copy{background:#2457d6;color:white;border:0;border-radius:7px;padding:8px 12px;cursor:pointer}.copy.ok{background:#16804a}.empty{text-align:center;color:#667085;padding:25px}footer{text-align:center;color:#667085;font-size:12px;padding:12px}@media(max-width:700px){main{grid-template-columns:1fr}aside{position:static}nav{grid-template-columns:repeat(2,1fr)}}
+</style></head>
+<body><header><h1>Java Practical Programs</h1><p>Beginner-friendly Java examples — browse, search and copy code.</p></header>
+<main><aside><strong>Find a program</strong><input id="search" placeholder="Search programs..." type="search"><nav id="nav"></nav></aside>
+<section class="content"><div class="top"><h2 id="heading">All Programs</h2><span id="count" class="muted"></span></div><div id="programs"></div></section></main>
+<footer>Copy one program at a time. Save each program as Main.java when its public class is Main.</footer>
+<script>
+const programs=[
+["OOP Basics","Class and Object","Create an object and call its method.",`class Student {
+    int rollNo = 10;
+    void display() {
+        System.out.println("Roll No: " + rollNo);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.display();
+    }
+}`],
+["OOP Basics","Default Constructor","A constructor without parameters.",`class Student {
+    Student() {
+        System.out.println("Default constructor called");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+    }
+}`],
+["OOP Basics","Parameterized Constructor","Pass values while creating an object.",`class Student {
+    int id; String name;
+    Student(int i, String n) { id = i; name = n; }
+    void display() { System.out.println(id + " " + name); }
+}
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student(1, "Arun");
+        s.display();
+    }
+}`],
+["OOP Basics","Constructor Overloading","Constructors with different parameter lists.",`class Box {
+    int length;
+    Box() { length = 0; }
+    Box(int l) { length = l; }
+    void display() { System.out.println("Length: " + length); }
+}
+public class Main {
+    public static void main(String[] args) {
+        Box b1 = new Box();
+        Box b2 = new Box(10);
+        b1.display(); b2.display();
+    }
+}`],
+["OOP Basics","Method Overloading","Same method name with different parameters.",`class Addition {
+    int add(int a, int b) { return a + b; }
+    int add(int a, int b, int c) { return a + b + c; }
+}
+public class Main {
+    public static void main(String[] args) {
+        Addition obj = new Addition();
+        System.out.println(obj.add(10, 20));
+        System.out.println(obj.add(10, 20, 30));
+    }
+}`],
+["OOP Basics","this, super, static and final","A short example of four Java keywords.",`class Parent { int number = 10; }
+class Child extends Parent {
+    int number = 20;
+    static int count = 0;
+    final int LIMIT = 100;
+    Child() { this.count++; }
+    void show() {
+        System.out.println(this.number);
+        System.out.println(super.number);
+        System.out.println(count);
+        System.out.println(LIMIT);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Child c = new Child(); c.show();
+    }
+}`],
+["OOP Basics","Method Overriding and Dynamic Dispatch","Overridden methods are selected at runtime.",`class Bank {
+    void rateOfInterest() { System.out.println("Bank interest rate"); }
+}
+class SBI extends Bank {
+    void rateOfInterest() { System.out.println("SBI interest rate: 7%"); }
+}
+class HDFC extends Bank {
+    void rateOfInterest() { System.out.println("HDFC interest rate: 8%"); }
+}
+public class Main {
+    public static void main(String[] args) {
+        Bank b = new SBI(); b.rateOfInterest();
+        b = new HDFC(); b.rateOfInterest();
+    }
+}`],
+["Strings & Arrays","String Palindrome","Check whether a string reads the same backwards.",`public class Main {
+    public static void main(String[] args) {
+        String str = "madam", rev = "";
+        for (int i = str.length() - 1; i >= 0; i--)
+            rev += str.charAt(i);
+        if (str.equalsIgnoreCase(rev))
+            System.out.println("Palindrome");
+        else
+            System.out.println("Not Palindrome");
+    }
+}`],
+["Strings & Arrays","Sort Names in Ascending Order","Sort names alphabetically.",`import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<String> names = new ArrayList<String>();
+        names.add("Ravi"); names.add("Anu"); names.add("Kiran");
+        Collections.sort(names);
+        for (String name : names) System.out.println(name);
+    }
+}`],
+["Strings & Arrays","StringTokenizer: Integers and Sum","Read a line of integers, display each and their sum.",`import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter integers separated by spaces:");
+        StringTokenizer st = new StringTokenizer(sc.nextLine());
+        int sum = 0;
+        while (st.hasMoreTokens()) {
+            int n = Integer.parseInt(st.nextToken());
+            System.out.println(n);
+            sum += n;
+        }
+        System.out.println("Sum = " + sum);
+        sc.close();
+    }
+}`],
+["Exceptions & Files","Checked Exception Handling","Handle an IOException from file operations.",`import java.io.*;
+public class Main {
+    public static void main(String[] args) {
+        try {
+            FileReader f = new FileReader("test.txt");
+            f.close();
+            System.out.println("File opened");
+        } catch (IOException e) {
+            System.out.println("File error: " + e);
+        }
+    }
+}`],
+["Exceptions & Files","Unchecked Exception Handling","Handle a runtime exception such as division by zero.",`public class Main {
+    public static void main(String[] args) {
+        try {
+            int a = 10 / 0;
+            System.out.println(a);
+        } catch (ArithmeticException e) {
+            System.out.println("Cannot divide by zero");
+        }
+    }
+}`],
+["Exceptions & Files","Count Characters, Words and Lines in a File","Create input.txt first, then run this program.",`import java.io.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+        int lines = 0, words = 0, characters = 0;
+        String line;
+        while ((line = br.readLine()) != null) {
+            lines++;
+            characters += line.length();
+            String trimmed = line.trim();
+            if (!trimmed.isEmpty()) words += trimmed.split("\\s+").length;
+        }
+        br.close();
+        System.out.println("Lines: " + lines);
+        System.out.println("Words: " + words);
+        System.out.println("Characters: " + characters);
+    }
+}`],
+["Multithreading","Three Threads with Different Delays","Print Good Morning, Hello and Welcome every 1, 2 and 3 seconds.",`class MessageThread extends Thread {
+    String message; int delay;
+    MessageThread(String msg, int d) { message = msg; delay = d; }
+    public void run() {
+        try {
+            while (true) {
+                System.out.println(message);
+                Thread.sleep(delay);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(message + " stopped");
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        new MessageThread("Good Morning", 1000).start();
+        new MessageThread("Hello", 2000).start();
+        new MessageThread("Welcome", 3000).start();
+    }
+}`],
+["Multithreading","Producer Consumer using wait() and notify()","Inter-thread communication using a shared buffer.",`class Buffer {
+    int value; boolean available = false;
+    synchronized void produce(int v) {
+        try {
+            while (available) wait();
+            value = v;
+            System.out.println("Produced: " + value);
+            available = true; notify();
+        } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+    }
+    synchronized void consume() {
+        try {
+            while (!available) wait();
+            System.out.println("Consumed: " + value);
+            available = false; notify();
+        } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Buffer b = new Buffer();
+        Thread producer = new Thread(() -> {
+            for (int i = 1; i <= 5; i++) b.produce(i);
+        });
+        Thread consumer = new Thread(() -> {
+            for (int i = 1; i <= 5; i++) b.consume();
+        });
+        producer.start(); consumer.start();
+    }
+}`],
+["Collections","ArrayList, Vector, Hashtable and Stack","A basic example of four collection classes.",`import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("Apple"); list.add("Mango");
+        System.out.println("ArrayList: " + list);
+
+        Vector<String> vector = new Vector<String>();
+        vector.add("Red"); vector.add("Blue");
+        System.out.println("Vector: " + vector);
+
+        Hashtable<Integer, String> table = new Hashtable<Integer, String>();
+        table.put(1, "One"); table.put(2, "Two");
+        System.out.println("Hashtable: " + table);
+
+        Stack<String> stack = new Stack<String>();
+        stack.push("First"); stack.push("Second");
+        System.out.println("Stack: " + stack);
+        System.out.println("Popped: " + stack.pop());
+    }
+}`]
+];
+const categories=["All Programs",...new Set(programs.map(p=>p[0]))];
+let selected="All Programs";
+const nav=document.getElementById("nav"),root=document.getElementById("programs"),search=document.getElementById("search");
+function drawNav(){nav.innerHTML="";categories.forEach(c=>{const b=document.createElement("button");b.textContent=c;b.className=c===selected?"active":"";b.onclick=()=>{selected=c;drawNav();draw();};nav.appendChild(b);});}
+function draw(){
+ const q=search.value.toLowerCase();
+ const shown=programs.filter(p=>(selected==="All Programs"||p[0]===selected)&&p.join(" ").toLowerCase().includes(q));
+ document.getElementById("heading").textContent=selected;
+ document.getElementById("count").textContent=shown.length+" programs";
+ root.innerHTML="";
+ if(!shown.length){root.innerHTML='<div class="empty">No matching programs found.</div>';return;}
+ shown.forEach(p=>{
+  const card=document.createElement("article");card.className="program";
+  const head=document.createElement("div");head.className="ph";
+  const title=document.createElement("h3");title.textContent=p[1];
+  const tag=document.createElement("span");tag.className="tag";tag.textContent=p[0];head.append(title,tag);
+  const desc=document.createElement("p");desc.className="desc";desc.textContent=p[2];
+  const pre=document.createElement("pre"),code=document.createElement("code");code.textContent=p[3];pre.appendChild(code);
+  const actions=document.createElement("div");actions.className="actions";
+  const btn=document.createElement("button");btn.className="copy";btn.textContent="Copy Code";
+  btn.onclick=async()=>{try{await navigator.clipboard.writeText(p[3]);btn.textContent="Copied!";btn.classList.add("ok");setTimeout(()=>{btn.textContent="Copy Code";btn.classList.remove("ok");},1200);}catch(e){btn.textContent="Clipboard unavailable";}};
+  actions.appendChild(btn);card.append(head,desc,pre,actions);root.appendChild(card);
+ });
+}
+search.addEventListener("input",draw);drawNav();draw();
+</script></body></html>
